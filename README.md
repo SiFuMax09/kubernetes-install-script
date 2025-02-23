@@ -1,4 +1,61 @@
 # EN
+# Kubernetes & Containerd Installation Script
+
+This script automates the installation of Containerd and Kubernetes on a Linux server (tested on Debian/Ubuntu).
+
+## Prerequisites
+- Root access on the Linux server.
+- Operating System: Debian/Ubuntu.
+
+## What will be installed
+- **Containerd** (Version 2.0.2)
+- **runc** (Version 1.2.5)
+- **CNI Plugins** (Version 1.6.2)
+- **Kubernetes** (kubeadm, kubelet, kubectl, Version 1.32)
+
+## Running the Script
+
+1. Make the script executable:
+   ```bash
+   chmod +x install.sh
+   ```
+
+2. Run the script as root or with sudo:
+   ```bash
+   sudo ./install.sh
+   ```
+
+## What does the script do?
+
+- Permanently disables and removes swap.
+- Installs Containerd and configures the Containerd service.
+- Installs runc and necessary CNI plugins.
+- Installs the latest versions of Kubernetes components (kubeadm, kubelet, kubectl).
+- Enables and starts all necessary services automatically.
+
+## After Installation
+
+Once completed, you can either initialize Kubernetes as a new cluster or join an existing one:
+
+- To initialize a new cluster:
+
+  ```bash
+  sudo kubeadm init
+  ```
+
+- To join an existing cluster, use the command provided by your cluster master:
+
+  ```bash
+  sudo kubeadm join <MASTER_IP>:<PORT> --token <TOKEN> --discovery-token-ca-cert-hash sha256:<HASH>
+  ```
+
+## Notes
+- The script is optimized for Debian-based systems.
+- Always check for newer versions of the software before running the script.
+
+## License
+This script is licensed under the MIT License. See the `LICENSE` file for more details.
+
 
 
 # DE
