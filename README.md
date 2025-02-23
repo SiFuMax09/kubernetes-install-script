@@ -15,12 +15,16 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 ## Running the Script
 
-1. Make the script executable:
+1. Download the script:
+   ```bash
+   wget https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh
+   ```
+3. Make the script executable:
    ```bash
    chmod +x install.sh
    ```
 
-2. Run the script as root or with sudo:
+4. Run the script as root or with sudo:
    ```bash
    sudo ./install.sh
    ```
@@ -75,12 +79,17 @@ Dieses Skript automatisiert die Installation von Containerd und Kubernetes auf e
 
 ## Ausführung des Skripts
 
-1. Mach das Skript ausführbar:
+1. Herunterladen des Scripts:
+   ```bash
+   wget https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh
+   ```
+
+2. Mach das Skript ausführbar:
    ```bash
    chmod +x install.sh
    ```
 
-2. Starte das Skript als Root oder mit sudo:
+3. Starte das Skript als Root oder mit sudo:
    ```bash
    sudo ./install.sh
    ```
