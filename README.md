@@ -5,6 +5,7 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 ## Prerequisites
 - Root access on the Linux server.
+- Sudo must be installed
 - Operating System: Debian/Ubuntu.
 
 ## What will be installed
@@ -69,6 +70,7 @@ Dieses Skript automatisiert die Installation von Containerd und Kubernetes auf e
 
 ## Voraussetzungen
 - Root-Zugriff auf den Linux-Server.
+- Sudo muss auf dem Server installiert sein.
 - Betriebssystem: Debian/Ubuntu.
 
 ## Was installiert wird
