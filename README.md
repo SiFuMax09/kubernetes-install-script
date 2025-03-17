@@ -1,4 +1,3 @@
-# EN
 # Kubernetes & Containerd Installation Script
 
 This script automates the installation of Containerd and Kubernetes on a Linux server (tested on Debian/Ubuntu).
@@ -42,7 +41,23 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 Once completed, you can either initialize Kubernetes as a new cluster or join an existing one:
 
+
+
 - To initialize a new cluster:
+   You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.
+
+   For that we recomend installing Calico
+
+   ```bash
+
+   kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.2/manifests/tigera-operator.yaml
+
+   kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.2/manifests/custom-resources.yaml
+   
+   ```
+   For more Information please consult the Kubernetes Docs at https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+  
+   Now you can continue with the initialization of the cluster
 
   ```bash
   sudo kubeadm init
@@ -60,70 +75,3 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 
 ## License
 This script is licensed under the MIT License. See the `LICENSE` file for more details.
-
-
-
-# DE
-# Kubernetes & Containerd Installation Script
-
-Dieses Skript automatisiert die Installation von Containerd und Kubernetes auf einem Linux-Server (getestet auf Debian/Ubuntu).
-
-## Voraussetzungen
-- Root-Zugriff auf den Linux-Server.
-- Sudo muss auf dem Server installiert sein.
-- Betriebssystem: Debian/Ubuntu.
-
-## Was installiert wird
-- **Containerd** (Version 2.0.2)
-- **runc** (Version 1.2.5)
-- **CNI Plugins** (Version 1.6.2)
-- **Kubernetes** (kubeadm, kubelet, kubectl, Version 1.32)
-
-## Ausführung des Skripts
-
-1. Herunterladen des Scripts:
-   ```bash
-   wget https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh
-   ```
-
-2. Mach das Skript ausführbar:
-   ```bash
-   chmod +x install.sh
-   ```
-
-3. Starte das Skript als Root oder mit sudo:
-   ```bash
-   sudo ./install.sh
-   ```
-
-## Was macht das Skript?
-
-- Deaktiviert und entfernt Swap dauerhaft.
-- Installiert Containerd und konfiguriert den Containerd-Dienst.
-- Installiert runc und die notwendigen CNI-Plugins.
-- Installiert die neuesten Versionen von Kubernetes-Komponenten (kubeadm, kubelet, kubectl).
-- Aktiviert und startet automatisch alle notwendigen Dienste.
-
-## Nach der Installation
-
-Nach Abschluss kannst du Kubernetes entweder als neuen Cluster initialisieren oder einem bestehenden Cluster beitreten:
-
-- Um einen neuen Cluster zu initialisieren:
-
-  ```bash
-  sudo kubeadm init
-  ```
-
-- Um einem bestehenden Cluster beizutreten, verwende den vom Master bereitgestellten Befehl:
-
-  ```bash
-  sudo kubeadm join <MASTER_IP>:<PORT> --token <TOKEN> --discovery-token-ca-cert-hash sha256:<HASH>
-  ```
-
-## Hinweise
-- Das Skript ist für Debian-basierte Systeme optimiert.
-- Prüfe stets, ob es eine aktuellere Version der verwendeten Software gibt, bevor du das Skript ausführst.
-
-## Lizenz
-Dieses Skript ist unter der MIT-Lizenz verfügbar. Siehe die Datei `LICENSE` für weitere Details.
-
