@@ -1,66 +1,84 @@
 #!/bin/bash
+set -e
+
+function check_success() {
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;32m$1 erfolgreich.\033[0m"
+    else
+        echo -e "\033[1;31mFehler bei: $1\033[0m"
+        exit 1
+    fi
+}
 
 # Swap deaktivieren
 echo -e "\n\033[1;34m--- Swap wird deaktiviert ---\033[0m\n"
-
-if sudo swapoff -a; then
-    echo -e "\033[1;32mswapoff -a erfolgreich ausgeführt.\033[0m"
+if swapon --summary | grep -q '^'; then
+    swapoff -a
+    check_success "swapoff -a"
 else
-    echo -e "\033[1;31mFehler: swapoff -a konnte nicht ausgeführt werden.\033[0m"
-    exit
+    echo -e "\033[1;33mKein aktiver Swap gefunden – überspringe swapoff.\033[0m"
 fi
 
-if sed -i '/swap/d' /etc/fstab; then
-    echo -e "\033[1;32mEinträge in /etc/fstab erfolgreich entfernt.\033[0m"
-else
-    echo -e "\033[1;31mFehler: Konnte swap-Einträge nicht aus /etc/fstab entfernen.\033[0m"
-    exit
-fi
+sed -i '/swap/d' /etc/fstab
+check_success "Entfernen von Swap-Einträgen aus /etc/fstab"
 
 # Containerd Installation
 echo -e "\n\033[1;34m--- Installation von Containerd startet ---\033[0m\n"
 wget -q --show-progress "https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz"
+check_success "Download von containerd"
 tar Cxzvf /usr/local containerd-2.0.2-linux-amd64.tar.gz
+check_success "Entpacken von containerd"
 
-# Systemd-Service für Containerd installieren
 wget -q --show-progress "https://raw.githubusercontent.com/containerd/containerd/main/containerd.service" -O /etc/systemd/system/containerd.service
+check_success "Download des containerd systemd-Services"
 
-sudo systemctl daemon-reload
-sudo systemctl enable --now containerd
-
-echo -e "\033[1;32mContainerd erfolgreich installiert und gestartet.\033[0m\n"
+systemctl daemon-reload
+systemctl enable --now containerd
+check_success "Starten von containerd"
 
 # runc Installation
 echo -e "\n\033[1;34m--- Installation von runc startet ---\033[0m\n"
 wget -q --show-progress "https://github.com/opencontainers/runc/releases/download/v1.2.5/runc.amd64"
-sudo install -m 755 runc.amd64 /usr/local/sbin/runc
-echo -e "\033[1;32mrunc erfolgreich installiert.\033[0m\n"
+check_success "Download von runc"
+install -m 755 runc.amd64 /usr/local/sbin/runc
+check_success "Installation von runc"
 
 # CNI Plugins Installation
 echo -e "\n\033[1;34m--- Installation der CNI Plugins startet ---\033[0m\n"
-sudo mkdir -p /opt/cni/bin
+mkdir -p /opt/cni/bin
 wget -q --show-progress "https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz"
-sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.6.2.tgz
-echo -e "\033[1;32mCNI Plugins erfolgreich installiert.\033[0m\n"
+check_success "Download der CNI Plugins"
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.6.2.tgz
+check_success "Installation der CNI Plugins"
 
 # Kubernetes Installation
 echo -e "\n\033[1;34m--- Installation von Kubernetes startet ---\033[0m\n"
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+apt-get update
+check_success "apt-get update"
 
-curl -fsSL "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key" | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+apt-get install -y apt-transport-https ca-certificates curl gpg
+check_success "Installation von Abhängigkeiten"
 
-sudo echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key" | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+check_success "Kubernetes Repo-Key importieren"
 
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+check_success "Kubernetes Repository eintragen"
 
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
+sysctl -w net.ipv4.ip_forward=1
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+sysctl -p
+check_success "IP-Forwarding aktivieren"
 
-sudo systemctl enable --now kubelet
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+check_success "Installation von kubelet, kubeadm und kubectl"
+
+apt-mark hold kubelet kubeadm kubectl
+check_success "Kubernetes-Pakete auf hold setzen"
+
+systemctl enable --now kubelet
+check_success "Starten des kubelet-Dienstes"
 
 echo -e "\033[1;32mKubernetes erfolgreich installiert und aktiviert.\033[0m\n"
 echo -e "\n\033[1;33m--- Installation vollständig abgeschlossen! ---\033[0m\n"
