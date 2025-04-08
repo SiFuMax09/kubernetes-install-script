@@ -95,7 +95,13 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 - For the previous thing to work good you might want to install a loadbalancing system like metallb. For that I am going to use the helm system.
   ```bash
   helm repo add metallb https://metallb.github.io/metallb
-  helm install metallb metallb/metallb 
+  helm install metallb metallb/metallb
+  ```
+
+- For having metrics in the dashboard i recommend installing this.
+  ```bash
+  kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  ```
 
 ## Notes
 - The script is optimized for Debian-based systems.
