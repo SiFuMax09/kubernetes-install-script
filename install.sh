@@ -7,12 +7,14 @@ if swapoff -a; then
     echo -e "\033[1;32mswapoff -a erfolgreich ausgeführt.\033[0m"
 else
     echo -e "\033[1;31mFehler: swapoff -a konnte nicht ausgeführt werden.\033[0m"
+    exit
 fi
 
 if sed -i '/swap/d' /etc/fstab; then
     echo -e "\033[1;32mEinträge in /etc/fstab erfolgreich entfernt.\033[0m"
 else
     echo -e "\033[1;31mFehler: Konnte swap-Einträge nicht aus /etc/fstab entfernen.\033[0m"
+    exit
 fi
 
 # Containerd Installation
