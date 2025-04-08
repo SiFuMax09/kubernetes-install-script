@@ -2,9 +2,20 @@
 
 # Swap deaktivieren
 echo -e "\n\033[1;34m--- Swap wird deaktiviert ---\033[0m\n"
-sudo swapoff -a
-sudo sed -i '/swap/d' /etc/fstab
-echo -e "\033[1;32mSwap erfolgreich deaktiviert.\033[0m\n"
+
+if swapoff -a; then
+    echo -e "\033[1;32mswapoff -a erfolgreich ausgeführt.\033[0m"
+else
+    echo -e "\033[1;31mFehler: swapoff -a konnte nicht ausgeführt werden.\033[0m"
+fi
+
+if sed -i '/swap/d' /etc/fstab; then
+    echo -e "\033[1;32mEinträge in /etc/fstab erfolgreich entfernt.\033[0m"
+else
+    echo -e "\033[1;31mFehler: Konnte swap-Einträge nicht aus /etc/fstab entfernen.\033[0m"
+fi
+
+echo -e "\n\033[1;32mSwap-Deaktivierung abgeschlossen.\033[0m\n"
 
 # Containerd Installation
 echo -e "\n\033[1;34m--- Installation von Containerd startet ---\033[0m\n"
