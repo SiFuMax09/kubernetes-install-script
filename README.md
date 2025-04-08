@@ -43,6 +43,12 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
      ```bash
      sudo kubeadm init
      ```
+     After you finished initialization of your cluser you need to run these commands to get your kubectl talk to kubelet & kubeadm
+     ```bash
+     mkdir -p $HOME/.kube
+     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+     sudo chown $(id -u):$(id -g) $HOME/.kube/config
+     ```
 
    You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.
 
