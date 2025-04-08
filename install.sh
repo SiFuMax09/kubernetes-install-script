@@ -3,7 +3,7 @@
 # Swap deaktivieren
 echo -e "\n\033[1;34m--- Swap wird deaktiviert ---\033[0m\n"
 
-if swapoff -a; then
+if sudo swapoff -a; then
     echo -e "\033[1;32mswapoff -a erfolgreich ausgeführt.\033[0m"
 else
     echo -e "\033[1;31mFehler: swapoff -a konnte nicht ausgeführt werden.\033[0m"
