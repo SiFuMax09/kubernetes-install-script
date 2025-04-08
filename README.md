@@ -17,16 +17,7 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 1. Download the script:
    ```bash
-   wget https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh
-   ```
-3. Make the script executable:
-   ```bash
-   chmod +x install.sh
-   ```
-
-4. Run the script as root or with sudo:
-   ```bash
-   sudo ./install.sh
+   sudo bash <(wget -qO- https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/main/install.sh)
    ```
 
 ## What does the script do?
