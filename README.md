@@ -36,6 +36,14 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 
 
 - To initialize a new cluster:
+
+   Now you can continue with the initialization of the cluster
+
+   For more Information please consult the Kubernetes Docs at https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
+     ```bash
+     sudo kubeadm init
+     ```
+
    You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.
 
    For that we recomend installing Calico
@@ -47,13 +55,7 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.2/manifests/custom-resources.yaml
    
    ```
-   For more Information please consult the Kubernetes Docs at https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-  
-   Now you can continue with the initialization of the cluster
 
-  ```bash
-  sudo kubeadm init
-  ```
 
 - To join an existing cluster, use the command provided by your cluster master:
 
