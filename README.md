@@ -6,6 +6,7 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 - Root access on the Linux server.
 - Sudo must be installed
 - Operating System: Debian/Ubuntu.
+- LXC Containers are not supported
 
 ## What will be installed
 - **Containerd** (Version 2.0.2)
@@ -15,9 +16,9 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 ## Running the Script
 
-1. Download the script:
+- Download the script:
    ```bash
-   sudo bash <(wget -qO- https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/main/install.sh)
+   sudo bash <(curl -s https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/main/install.sh)
    ```
 
 ## What does the script do?
