@@ -69,6 +69,26 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
   sudo kubeadm join <MASTER_IP>:<PORT> --token <TOKEN> --discovery-token-ca-cert-hash sha256:<HASH>
   ```
 
+
+- If you want to deploy heml applications you should install it with these commands
+   ```bash
+   curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+   sudo apt-get install apt-transport-https --yes
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+   sudo apt-get update
+   sudo apt-get install helm
+   ```
+
+- There is also a kubernetes dashboard available for you to install
+  - This requires you to have installed Helm CLI (See Step before)
+ 
+  ```bash
+  # Add kubernetes-dashboard repository
+  helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+  # Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
+  helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+  ```
+
 ## Notes
 - The script is optimized for Debian-based systems.
 - Always check for newer versions of the software before running the script.
