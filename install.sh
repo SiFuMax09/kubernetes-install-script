@@ -15,8 +15,6 @@ else
     echo -e "\033[1;31mFehler: Konnte swap-Einträge nicht aus /etc/fstab entfernen.\033[0m"
 fi
 
-echo -e "\n\033[1;32mSwap-Deaktivierung abgeschlossen.\033[0m\n"
-
 # Containerd Installation
 echo -e "\n\033[1;34m--- Installation von Containerd startet ---\033[0m\n"
 wget -q --show-progress "https://github.com/containerd/containerd/releases/download/v2.0.2/containerd-2.0.2-linux-amd64.tar.gz"
