@@ -89,7 +89,15 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
   ### Information about the dashboard
   - ``kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443`` command is required to be run to access the dashboard. This command NEEDS to be ran on your computer after you installed the kubectl on your computer and copied the kube config file. (A tutorial will follow.)
   - To expose the dashboard permanent you need to change the Service ``kubernetes-dashboard-kong-proxy`` type to ``NodePort`` after you done that Kubernetes will redeploy that Service and now your Application is available via the NodePort you can get that from viewing the config again.
- 
+
+  To use NANO instead of the default editor VI use that command in the terminal
+  ``export KUBE_EDITOR=nano``
+
+  To edit the kubernetes-dashboard-kong-proxy service use that command
+  ```bash
+  kubectl edit svc kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
+  ```
+  
 - For the previous thing to work good you might want to install a loadbalancing system like metallb. For that I am going to use the helm system.
   ```bash
   helm repo add metallb https://metallb.github.io/metallb
