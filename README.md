@@ -97,6 +97,19 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
   ```bash
   kubectl edit svc kubernetes-dashboard-kong-proxy -n kubernetes-dashboard
   ```
+
+  To get access to the dashboard we need to create a new service account with an token.
+  ```bash
+  kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard
+
+  kubectl create clusterrolebinding dashboard-admin-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=kubernetes-dashboard:dashboard-admin
+
+  kubectl -n kubernetes-dashboard create token dashboard-admin
+
+  ```
+  Use the given token to login to the dashboard.
   
 - For the previous thing to work good you might want to install a loadbalancing system like metallb. For that I am going to use the helm system.
   ```bash
