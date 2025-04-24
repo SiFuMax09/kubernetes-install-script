@@ -93,7 +93,42 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 - For the previous thing to work good you might want to install a loadbalancing system like metallb. For that I am going to use the helm system.
   ```bash
   helm repo add metallb https://metallb.github.io/metallb
-  helm install metallb metallb/metallb
+  helm repo update
+  ```
+
+  ```bash
+  kubectl create namespace metallb-system
+  ```
+
+  ```bash
+  helm install metallb metallb/metallb -n metallb-system
+  ```
+
+   Then you want to create a config for metallb.
+
+   ```
+   nano metallb-config.yaml
+   ```
+
+  ```
+   apiVersion: metallb.io/v1beta1
+   kind: IPAddressPool
+   metadata:
+     name: default-pool
+     namespace: metallb-system
+   spec:
+     addresses:
+     - 172.20.0.240-172.20.0.250
+   ---
+   apiVersion: metallb.io/v1beta1
+   kind: L2Advertisement
+   metadata:
+     name: l2-advert
+     namespace: metallb-system
+   ```
+
+  ```
+  kubectl apply -f metallb-config.yaml
   ```
 
 - For having metrics in the dashboard i recommend installing this.
