@@ -110,22 +110,22 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
    nano metallb-config.yaml
    ```
 
-```yaml
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: default-pool
-  namespace: metallb-system
-spec:
-  addresses:
-    - 172.20.0.240-172.20.0.250
----
-apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
-metadata:
-  name: l2-advert
-  namespace: metallb-system
-```
+   ```yaml
+   apiVersion: metallb.io/v1beta1
+   kind: IPAddressPool
+   metadata:
+     name: default-pool
+     namespace: metallb-system
+   spec:
+     addresses:
+       - 172.20.0.240-172.20.0.250
+   ---
+   apiVersion: metallb.io/v1beta1
+   kind: L2Advertisement
+   metadata:
+     name: l2-advert
+     namespace: metallb-system
+   ```
 
   ```
   kubectl apply -f metallb-config.yaml
