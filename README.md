@@ -118,7 +118,7 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
      namespace: metallb-system
    spec:
      addresses:
-     - 172.20.0.240-172.20.0.250
+     - 172.20.0.240-172.20.0.250 # <-- Here you want to change the IP range
    ---
    apiVersion: metallb.io/v1beta1
    kind: L2Advertisement
