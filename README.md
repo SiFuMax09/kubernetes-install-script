@@ -100,14 +100,15 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 
   To get access to the dashboard we need to create a new service account with an token.
   ```bash
-  kubectl create serviceaccount dashboard-admin -n kubernetes-dashboard
-
-  kubectl create clusterrolebinding dashboard-admin-binding \
-  --clusterrole=cluster-admin \
-  --serviceaccount=kubernetes-dashboard:dashboard-admin
-
-  kubectl -n kubernetes-dashboard create token dashboard-admin
-
+   kubectl -n kubernetes-dashboard create serviceaccount dashboard-admin && \
+   kubectl create clusterrolebinding dashboard-admin-binding \
+     --clusterrole=cluster-admin \
+     --serviceaccount=kubernetes-dashboard:dashboard-admin && \
+   kubectl -n kubernetes-dashboard create secret generic dashboard-admin-token \
+     --type kubernetes.io/service-account-token \
+     --from-literal=token=$(openssl rand -hex 32) && \
+   kubectl -n kubernetes-dashboard patch serviceaccount dashboard-admin \
+     -p '{"secrets": [{"name": "dashboard-admin-token"}]}'
   ```
   Use the given token to login to the dashboard.
   
