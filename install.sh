@@ -26,7 +26,7 @@ check_success "Entfernen von Swap-Einträgen aus /etc/fstab"
 echo -e "\n\033[1;34m--- Installation von Containerd startet ---\033[0m\n"
 wget -q --show-progress "https://github.com/containerd/containerd/releases/download/v2.0.5/containerd-2.0.5-linux-amd64.tar.gz"
 check_success "Download von containerd"
-tar Cxzvf /usr/local containerd-2.0.2-linux-amd64.tar.gz
+tar Cxzvf /usr/local containerd-2.0.5-linux-amd64.tar.gz
 check_success "Entpacken von containerd"
 
 wget -q --show-progress "https://raw.githubusercontent.com/containerd/containerd/main/containerd.service" -O /etc/systemd/system/containerd.service
