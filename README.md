@@ -10,8 +10,8 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 ## What will be installed
 - **Containerd** (Version 2.0.5)
-- **runc** (Version 1.2.5)
-- **CNI Plugins** (Version 1.6.2)
+- **runc** (Version 1.3.0)
+- **CNI Plugins** (Version 1.7.1)
 - **Kubernetes** (kubeadm, kubelet, kubectl, Version latest)
 
 ## Running the Script
