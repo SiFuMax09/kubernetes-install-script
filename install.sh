@@ -46,9 +46,9 @@ check_success "Installation von runc"
 # CNI Plugins Installation
 echo -e "\n\033[1;34m--- Installation der CNI Plugins startet ---\033[0m\n"
 mkdir -p /opt/cni/bin
-wget -q --show-progress "https://github.com/containernetworking/plugins/releases/download/v1.7.1/cni-plugins-linux-amd64-v1.7.1.tgz"
+wget -q --show-progress "https://github.com/containernetworking/plugins/releases/download/v1.8.0/cni-plugins-linux-amd64-v1.8.0.tgz"
 check_success "Download der CNI Plugins"
-tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.7.1.tgz
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.8.0.tgz
 check_success "Installation der CNI Plugins"
 
 # Kubernetes Installation
