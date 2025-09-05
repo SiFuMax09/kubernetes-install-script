@@ -18,7 +18,7 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 
 - Download the script:
    ```bash
-   curl -s https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh | bash
+   sudo curl -s https://raw.githubusercontent.com/SiFuMax09/kubernetes-install-script/refs/heads/main/install.sh | bash
    ```
 
 ## What does the script do?
