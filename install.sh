@@ -12,12 +12,8 @@ function check_success() {
 
 # Swap deaktivieren
 echo -e "\n\033[1;34m--- Swap wird deaktiviert ---\033[0m\n"
-if swapon --summary | grep -q '^'; then
-    swapoff -a
-    check_success "swapoff -a"
-else
-    echo -e "\033[1;33mKein aktiver Swap gefunden – überspringe swapoff.\033[0m"
-fi
+swapoff -a
+check_success "swapoff -a"
 
 sed -i '/swap/d' /etc/fstab
 check_success "Entfernen von Swap-Einträgen aus /etc/fstab"
