@@ -59,10 +59,10 @@ check_success "apt-get update"
 apt-get install -y apt-transport-https ca-certificates curl gpg
 check_success "Installation von Abhängigkeiten"
 
-curl -fsSL "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key" | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL "https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key" | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 check_success "Kubernetes Repo-Key importieren"
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
 check_success "Kubernetes Repository eintragen"
 
 sysctl -w net.ipv4.ip_forward=1
