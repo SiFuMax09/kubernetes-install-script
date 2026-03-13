@@ -9,10 +9,10 @@ This script automates the installation of Containerd and Kubernetes on a Linux s
 - LXC Containers are not supported
 
 ## What will be installed
-- **Containerd** (Version 2.1.4)
-- **runc** (Version 1.3.0)
-- **CNI Plugins** (Version 1.7.1)
-- **Kubernetes** (kubeadm, kubelet, kubectl, Version v1.34)
+- **Containerd** (Version latest or specified)
+- **runc** (Version latest or specified)
+- **CNI Plugins** (Version latest or specified)
+- **Kubernetes** (kubeadm, kubelet, kubectl, Version Version latest or specified)
 
 ## Running the Script
 
