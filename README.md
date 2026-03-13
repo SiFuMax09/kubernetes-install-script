@@ -57,7 +57,7 @@ Once completed, you can either initialize Kubernetes as a new cluster or join an
 
    ```bash
 
-   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/calico.yaml
+   kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.4/manifests/calico.yaml
    
    ```
 
