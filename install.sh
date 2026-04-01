@@ -145,4 +145,29 @@ systemctl enable --now kubelet
 
 ok "Kubernetes installiert"
 
-echo -e "\n\033[1;32m=== Installation abgeschlossen ===\033[0m\n"
+KUBELET_VERSION=$(kubelet --version 2>/dev/null | awk '{print $2}' || echo "unbekannt")
+KUBEADM_VERSION=$(kubeadm version -o short 2>/dev/null || echo "unbekannt")
+KUBECTL_VERSION=$(kubectl version --client -o json 2>/dev/null | grep '"gitVersion"' | head -1 | cut -d'"' -f4 || echo "unbekannt")
+CONTAINERD_INSTALLED=$(containerd --version 2>/dev/null | awk '{print $3}' || echo "unbekannt")
+RUNC_INSTALLED=$(runc --version 2>/dev/null | head -1 | awk '{print $3}' || echo "unbekannt")
+
+echo -e "\n\033[1;32m╔══════════════════════════════════════════════════╗\033[0m"
+echo -e "\033[1;32m║         Installation abgeschlossen ✔             ║\033[0m"
+echo -e "\033[1;32m╚══════════════════════════════════════════════════╝\033[0m"
+
+echo -e "\n\033[1;36m📦 Installierte Komponenten:\033[0m"
+echo -e "  containerd     \033[1;33m${CONTAINERD_INSTALLED}\033[0m  (angefragt: ${CONTAINERD_VERSION})"
+echo -e "  runc           \033[1;33m${RUNC_INSTALLED}\033[0m  (angefragt: ${RUNC_VERSION})"
+echo -e "  CNI Plugins    \033[1;33m${CNI_VERSION}\033[0m"
+echo -e "  kubelet        \033[1;33m${KUBELET_VERSION}\033[0m"
+echo -e "  kubeadm        \033[1;33m${KUBEADM_VERSION}\033[0m"
+echo -e "  kubectl        \033[1;33m${KUBECTL_VERSION}\033[0m"
+
+echo -e "\n\033[1;36m⚙️  Systemänderungen:\033[0m"
+echo -e "  Swap           \033[1;33mdeaktiviert & aus /etc/fstab entfernt\033[0m"
+echo -e "  ip_forward     \033[1;33maktiviert (net.ipv4.ip_forward=1)\033[0m"
+echo -e "  kubelet        \033[1;33mon hold (apt-mark)\033[0m"
+echo -e "  kubeadm        \033[1;33mon hold (apt-mark)\033[0m"
+echo -e "  kubectl        \033[1;33mon hold (apt-mark)\033[0m"
+echo -e "  Kubernetes Repo \033[1;33mv1.32\033[0m"
+echo ""
