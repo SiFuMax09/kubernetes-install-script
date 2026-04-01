@@ -28,9 +28,13 @@ function latest_github_release() {
 
 echo -e "\033[1;36mVersion Setup (leer = latest)\033[0m"
 
-read -rp "Containerd Version (z.B. v2.1.4): " CONTAINERD_VERSION
-read -rp "runc Version (z.B. v1.3.0): " RUNC_VERSION
-read -rp "CNI Plugins Version (z.B. v1.8.0): " CNI_VERSION
+CONTAINERD_VERSION=""
+RUNC_VERSION=""
+CNI_VERSION=""
+
+read -rp "Containerd Version (z.B. v2.1.4): " CONTAINERD_VERSION || true
+read -rp "runc Version (z.B. v1.3.0): " RUNC_VERSION || true
+read -rp "CNI Plugins Version (z.B. v1.8.0): " CNI_VERSION || true
 
 if [[ -z "$CONTAINERD_VERSION" ]]; then
   CONTAINERD_VERSION=$(latest_github_release containerd/containerd)
