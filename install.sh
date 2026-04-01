@@ -110,9 +110,9 @@ step "CNI Plugins installieren"
 mkdir -p /opt/cni/bin
 
 wget -q --show-progress \
-"https://github.com/containernetworking/plugins/releases/download/${CNI_VERSION}/cni-plugins-linux-amd64-${CNI_VERSION#v}.tgz"
+"https://github.com/containernetworking/plugins/releases/download/${CNI_VERSION}/cni-plugins-linux-amd64-${CNI_VERSION}.tgz"
 
-tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-${CNI_VERSION#v}.tgz
+tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-${CNI_VERSION}.tgz
 
 ok "CNI installiert"
 
